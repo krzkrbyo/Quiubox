@@ -1,0 +1,36 @@
+.qb-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.qb-h2 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  color: var(--qb-accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.qb-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.qb-form-wrap {
+  align-items: flex-end;
+}
+
+mat-form-field {
+  min-width: 220px;
+}
+
+.qb-table {
+  width: 100%;
+}
+
+.qb-muted {
+  color: var(--qb-muted);
+}

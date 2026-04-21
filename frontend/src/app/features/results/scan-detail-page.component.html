@@ -1,0 +1,54 @@
+<div class="qb-page">
+  @if (loading) {
+    <p>Cargando…</p>
+  } @else if (!scan) {
+    <p>Escaneo no encontrado.</p>
+    <a routerLink="/results" class="qb-link">Volver a resultados</a>
+  } @else {
+    <div class="qb-toolbar-row">
+      <a mat-button routerLink="/results">← Resultados</a>
+      <button mat-flat-button color="primary" type="button" [disabled]="exporting" (click)="exportPdf()">
+        {{ exporting ? 'Generando…' : 'Exportar PDF' }}
+      </button>
+    </div>
+
+    <div #pdfArea>
+      <mat-card class="qb-card qb-mb">
+        <h1 class="qb-panel-title">Detalle de escaneo</h1>
+        <p><strong>Objetivo:</strong> {{ scan.target }}</p>
+        <p><strong>Tipo:</strong> {{ scan.scanType }}</p>
+        <p><strong>Estado:</strong> {{ scan.status }}</p>
+        <p><strong>Finalizado:</strong> {{ scan.finishedAt | date: 'medium' }}</p>
+        <p>
+          <strong>Conteos:</strong> críticas/altas {{ scan.criticalCount }}, medias {{ scan.mediumCount }}, bajas
+          {{ scan.lowCount }}
+        </p>
+      </mat-card>
+
+      <h2 class="qb-h2">Vulnerabilidades por riesgo</h2>
+
+      @for (sev of order; track sev) {
+        @if (bySeverity(sev).length > 0) {
+          <section class="qb-sev-block">
+            <h3>{{ severityHeading(sev) }}</h3>
+            <ul class="qb-vuln-list">
+              @for (v of bySeverity(sev); track v.id) {
+                <li>
+                  <app-severity-badge [severity]="v.severity" />
+                  <a class="qb-link" [routerLink]="['/results', scan.id, 'vuln', v.id]">{{ v.title }}</a>
+                  @if (v.cve) {
+                    <span class="qb-cve">{{ v.cve }}</span>
+                  }
+                </li>
+              }
+            </ul>
+          </section>
+        }
+      }
+
+      @if (vulns.length === 0) {
+        <p class="qb-muted">No se registraron vulnerabilidades para este escaneo.</p>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,39 @@
+<div class="qb-page">
+  <h1 class="qb-panel-title">Panel de resumen</h1>
+  @if (error) {
+    <p class="qb-error">{{ error }}</p>
+  }
+  @if (stats) {
+    <div class="qb-grid">
+      <mat-card class="qb-card kpi">
+        <h2>Total hallazgos</h2>
+        <p class="kpi-value">{{ stats.totalVulnerabilities }}</p>
+      </mat-card>
+      <mat-card class="qb-card kpi critical">
+        <h2>Críticas / altas</h2>
+        <p class="kpi-value">{{ stats.critical }}</p>
+      </mat-card>
+      <mat-card class="qb-card kpi medium">
+        <h2>Medias</h2>
+        <p class="kpi-value">{{ stats.medium }}</p>
+      </mat-card>
+      <mat-card class="qb-card kpi low">
+        <h2>Bajas</h2>
+        <p class="kpi-value">{{ stats.low }}</p>
+      </mat-card>
+    </div>
+    <mat-card class="qb-card qb-mt">
+      <p>
+        Último escaneo:
+        @if (stats.lastScanAt) {
+          <strong>{{ stats.lastScanAt | date: 'medium' }}</strong>
+          @if (stats.lastScanId) {
+            — <a class="qb-link" [routerLink]="['/results', stats.lastScanId]">Ver detalle</a>
+          }
+        } @else {
+          <span>Sin datos</span>
+        }
+      </p>
+    </mat-card>
+  }
+</div>

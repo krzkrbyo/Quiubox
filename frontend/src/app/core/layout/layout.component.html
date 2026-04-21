@@ -1,0 +1,17 @@
+<mat-toolbar color="primary" class="qb-toolbar">
+  <span class="qb-brand">Quiubox</span>
+  <span class="qb-spacer"></span>
+  <a mat-button routerLink="/dashboard" routerLinkActive="active">Panel</a>
+  <a mat-button routerLink="/scans" routerLinkActive="active">Escaneos</a>
+  <a mat-button routerLink="/results" routerLinkActive="active">Resultados</a>
+  @if (auth.isAdmin()) {
+    <a mat-button routerLink="/admin/users" routerLinkActive="active">Usuarios</a>
+  }
+  <span class="qb-user">{{ auth.user()?.username }}</span>
+  <button mat-icon-button type="button" (click)="logout()" aria-label="Cerrar sesión">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
+<main class="qb-main">
+  <router-outlet />
+</main>

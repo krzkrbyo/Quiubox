@@ -1,0 +1,32 @@
+.kpi h2 {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--qb-muted);
+  font-weight: 400;
+}
+
+.kpi-value {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--qb-accent);
+}
+
+.kpi.critical .kpi-value {
+  color: var(--qb-danger);
+}
+
+.kpi.medium .kpi-value {
+  color: var(--qb-warn);
+}
+
+.kpi.low .kpi-value {
+  color: var(--qb-accent-dim);
+}
+
+.qb-mt {
+  margin-top: 1rem;
+}
+
+.qb-error {
+  color: var(--qb-danger);
+}

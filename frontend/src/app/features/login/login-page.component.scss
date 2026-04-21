@@ -1,0 +1,26 @@
+.qb-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.qb-login-card {
+  width: min(420px, 100%);
+}
+
+.full {
+  width: 100%;
+}
+
+.qb-error {
+  color: var(--qb-danger);
+  font-size: 0.85rem;
+}
+
+.qb-hint {
+  font-size: 0.75rem;
+  color: var(--qb-muted);
+  margin-bottom: 1rem;
+}

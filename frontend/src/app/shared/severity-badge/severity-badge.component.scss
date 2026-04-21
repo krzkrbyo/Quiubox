@@ -1,0 +1,30 @@
+.qb-sev {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--qb-border);
+}
+
+.critical {
+  color: var(--qb-danger);
+  border-color: rgba(255, 68, 102, 0.5);
+  background: rgba(255, 68, 102, 0.08);
+}
+
+.high {
+  color: #ff8866;
+  border-color: rgba(255, 136, 102, 0.4);
+  background: rgba(255, 136, 102, 0.06);
+}
+
+.medium {
+  color: var(--qb-warn);
+  border-color: rgba(255, 170, 51, 0.4);
+}
+
+.low {
+  color: var(--qb-accent-dim);
+  border-color: rgba(0, 196, 106, 0.35);
+}

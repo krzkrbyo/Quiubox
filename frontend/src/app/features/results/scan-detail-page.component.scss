@@ -1,0 +1,52 @@
+.qb-toolbar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.qb-mb {
+  margin-bottom: 1.25rem;
+}
+
+.qb-h2 {
+  font-size: 1rem;
+  color: var(--qb-accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.qb-sev-block {
+  margin-bottom: 1rem;
+}
+
+.qb-sev-block h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.qb-vuln-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.qb-vuln-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--qb-border);
+}
+
+.qb-cve {
+  color: var(--qb-muted);
+  font-size: 0.8rem;
+}
+
+.qb-muted {
+  color: var(--qb-muted);
+}

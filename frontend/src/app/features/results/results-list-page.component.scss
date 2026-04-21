@@ -1,0 +1,37 @@
+.qb-filters {
+  margin-bottom: 1rem;
+}
+
+.qb-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.qb-h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--qb-accent);
+}
+
+.qb-pdf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.qb-table {
+  width: 100%;
+}
+
+.qb-muted {
+  color: var(--qb-muted);
+}
+
+.qb-pdf-block {
+  padding: 2px;
+}

@@ -1,0 +1,94 @@
+@import '@angular/material/prebuilt-themes/pink-bluegrey.css';
+
+:root {
+  --qb-bg: #0a0f0d;
+  --qb-surface: #121a16;
+  --qb-surface-2: #1a2620;
+  --qb-border: #1f3d2e;
+  --qb-accent: #00ff88;
+  --qb-accent-dim: #00c46a;
+  --qb-text: #e8fff0;
+  --qb-muted: #7a9e8c;
+  --qb-danger: #ff4466;
+  --qb-warn: #ffaa33;
+  --qb-font: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--qb-font);
+  background: radial-gradient(ellipse at top, #0f1f18 0%, var(--qb-bg) 55%);
+  color: var(--qb-text);
+}
+
+.mat-mdc-card,
+.mat-toolbar,
+.mat-mdc-table,
+.mat-mdc-form-field,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  font-family: var(--qb-font) !important;
+}
+
+.mat-app-background,
+.mat-drawer-container {
+  background-color: var(--qb-bg) !important;
+}
+
+.qb-page {
+  padding: 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.qb-card {
+  background: var(--qb-surface) !important;
+  border: 1px solid var(--qb-border);
+  border-radius: 8px;
+  box-shadow: 0 0 24px rgba(0, 255, 136, 0.06);
+}
+
+.qb-panel-title {
+  color: var(--qb-accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin: 0 0 1rem;
+}
+
+.qb-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+a.qb-link {
+  color: var(--qb-accent);
+  text-decoration: none;
+}
+a.qb-link:hover {
+  text-decoration: underline;
+}
+
+.qb-snack-success .mdc-snackbar__surface {
+  border: 1px solid var(--qb-border);
+  background: var(--qb-surface-2) !important;
+  color: var(--qb-accent) !important;
+}
+
+.qb-snack-warn .mdc-snackbar__surface {
+  border: 1px solid rgba(255, 170, 51, 0.45);
+  background: #1f1810 !important;
+  color: var(--qb-warn) !important;
+}
+
+.qb-snack-error .mdc-snackbar__surface {
+  border: 1px solid rgba(255, 68, 102, 0.45);
+  background: #1a1014 !important;
+  color: var(--qb-danger) !important;
+}

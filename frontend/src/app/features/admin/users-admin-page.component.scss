@@ -1,0 +1,26 @@
+.qb-mb {
+  margin-bottom: 1.25rem;
+}
+
+.qb-h2 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  color: var(--qb-accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.qb-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.qb-table {
+  width: 100%;
+}
+
+.qb-inline {
+  width: 160px;
+}

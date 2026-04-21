@@ -1,0 +1,29 @@
+.qb-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--qb-border);
+}
+
+.qb-brand {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.qb-spacer {
+  flex: 1;
+}
+
+.qb-user {
+  margin-right: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--qb-muted);
+}
+
+.qb-main {
+  min-height: calc(100vh - 64px);
+}
+
+a.active {
+  color: var(--qb-accent) !important;
+}
