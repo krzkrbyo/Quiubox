@@ -32,6 +32,9 @@
           {{ exporting ? 'Generando…' : 'Exportar PDF' }}
         </button>
       </div>
+      @if (lastFinishedScanId) {
+        <p class="qb-result-notice">Escaneo {{ lastFinishedScanId }} guardado en resultados.</p>
+      }
       @if (loading) {
         <p>Cargando…</p>
       } @else if (scans.length === 0) {

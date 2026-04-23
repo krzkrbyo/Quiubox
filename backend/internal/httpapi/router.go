@@ -16,11 +16,15 @@ import (
 func NewRouter(gdb *gorm.DB, cfg config.Config) http.Handler {
 	userRepo := repositories.NewUserRepository(gdb)
 	sessionRepo := repositories.NewSessionRepository(gdb)
+	scanRepo := repositories.NewScanRepository(gdb)
 	sessionDays, _ := strconv.Atoi(cfg.SessionDays)
 	authService := services.NewAuthService(userRepo, sessionRepo, sessionDays, cfg.SessionSecret)
 	authHandler := handlers.NewAuthHandler(authService)
 	userService := services.NewUserService(userRepo)
 	usersHandler := handlers.NewUsersHandler(userService)
+	scanEvents := services.NewScanEventHub()
+	scanService := services.NewScanService(scanRepo, scanEvents)
+	scansHandler := handlers.NewScansHandler(scanService, scanEvents, cfg.CorsAllowedOrig)
 
 	r := mux.NewRouter()
 	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -37,6 +41,16 @@ func NewRouter(gdb *gorm.DB, cfg config.Config) http.Handler {
 	api.HandleFunc("/users", usersHandler.Create).Methods(http.MethodPost)
 	api.HandleFunc("/users/{id}", usersHandler.Update).Methods(http.MethodPatch)
 	api.HandleFunc("/users/{id}", usersHandler.Delete).Methods(http.MethodDelete)
+	api.HandleFunc("/scans", scansHandler.List).Methods(http.MethodGet)
+	api.HandleFunc("/scans", scansHandler.Create).Methods(http.MethodPost)
+	api.HandleFunc("/scans/{id}", scansHandler.Get).Methods(http.MethodGet)
+	api.HandleFunc("/scans/{scanId}/details", scansHandler.ListVulnerabilities).Methods(http.MethodGet)
+	api.HandleFunc("/scans/{scanId}/details/{vulnId}", scansHandler.GetVulnerability).Methods(http.MethodGet)
+	api.HandleFunc("/results/scans", scansHandler.ListCompleted).Methods(http.MethodGet)
+	api.HandleFunc("/results/scans/{scanId}/vulnerabilities", scansHandler.ListVulnerabilities).Methods(http.MethodGet)
+	api.HandleFunc("/results/scans/{scanId}/vulnerabilities/{vulnId}", scansHandler.GetVulnerability).Methods(http.MethodGet)
+	api.HandleFunc("/results/scans/{scanId}/vulnerabilities/{vulnId}/nvd/refresh", scansHandler.RefreshNVD).Methods(http.MethodPost)
+	api.HandleFunc("/ws/scans", scansHandler.WebSocket).Methods(http.MethodGet)
 
 	return corsMiddleware(r, cfg.CorsAllowedOrig)
 }

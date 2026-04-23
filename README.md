@@ -1,10 +1,21 @@
 # Quiubox
-Plataforma de gestión de vulnerabilidades en redes y servidores
 
-## Teconologias a utilizar
--- Go
--- Angular 
--- PostgreSQL
--- OpenVas
--- Nmap
--- Kubernetes
+Plataforma de gestion de vulnerabilidades en redes y servidores.
+
+## Tecnologias a utilizar
+
+- Go
+- Angular
+- PostgreSQL
+- OpenVAS
+- Nmap
+- Docker
+- Kubernetes
+- WebSocket
+- JWT
+
+## Documentacion
+
+- [Estrategia de escaneos](README_ESTRATEGIA_ESCANEOS.md)
+- [Arquitectura](ARQUITECTURA.md)
+- [Requerimientos](Requerimientos.md)

@@ -13,6 +13,8 @@ import { MatTableModule } from '@angular/material/table';
 import { interval, merge, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import type { Scan, ScanSchedule, ScanType } from '../../core/models/domain.models';
+import { NotificationService } from '../../core/services/notification.service';
+import { ScanEventsService } from '../../core/services/scan-events.service';
 import { ScansApiService } from '../../core/services/scans-api.service';
 
 @Component({
@@ -38,6 +40,8 @@ export class ScansPageComponent implements OnInit {
   private readonly scansApi = inject(ScansApiService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly dialog = inject(MatDialog);
+  private readonly scanEvents = inject(ScanEventsService);
+  private readonly notifications = inject(NotificationService);
 
   readonly manualForm = this.fb.nonNullable.group({
     target: ['', [Validators.required]],
@@ -56,6 +60,7 @@ export class ScansPageComponent implements OnInit {
   loadingList = true;
   starting = false;
   scheduling = false;
+  demoScan: Scan | null = null;
 
   private readonly refresh$ = new Subject<void>();
 
@@ -91,6 +96,18 @@ export class ScansPageComponent implements OnInit {
           this.loadingList = false;
         },
       });
+
+    this.scanEvents
+      .scanFinished()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (event) => {
+          this.demoScan = null;
+          this.notifications.scanFinished(event.scanId, event.criticalCount);
+          this.refresh$.next();
+        },
+        error: () => undefined,
+      });
   }
 
   startManual(): void {
@@ -101,7 +118,8 @@ export class ScansPageComponent implements OnInit {
     this.starting = true;
     const { target, scanType } = this.manualForm.getRawValue();
     this.scansApi.startScan({ target, scanType }).subscribe({
-      next: () => {
+      next: (scan) => {
+        this.demoScan = scan;
         this.starting = false;
         this.dialog.closeAll();
         this.refresh$.next();

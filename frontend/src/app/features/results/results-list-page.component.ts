@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,6 +13,7 @@ import { debounceTime, distinctUntilChanged, skip } from 'rxjs/operators';
 import type { Scan, ScanListFilters, ScanType } from '../../core/models/domain.models';
 import { PdfService } from '../../core/services/pdf.service';
 import { ResultsApiService } from '../../core/services/results-api.service';
+import { ScanEventsService } from '../../core/services/scan-events.service';
 
 @Component({
   selector: 'app-results-list-page',
@@ -34,6 +36,8 @@ export class ResultsListPageComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly resultsApi = inject(ResultsApiService);
   private readonly pdf = inject(PdfService);
+  private readonly scanEvents = inject(ScanEventsService);
+  private readonly destroyRef = inject(DestroyRef);
 
   @ViewChild('pdfArea') pdfArea?: ElementRef<HTMLElement>;
 
@@ -46,6 +50,7 @@ export class ResultsListPageComponent implements OnInit {
   scans: Scan[] = [];
   loading = true;
   exporting = false;
+  lastFinishedScanId: string | null = null;
 
   readonly displayedColumns = ['target', 'scanType', 'finishedAt', 'counts', 'actions'];
 
@@ -61,6 +66,17 @@ export class ResultsListPageComponent implements OnInit {
         skip(1),
       )
       .subscribe(() => this.applyFilters());
+
+    this.scanEvents
+      .scanFinished()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (event) => {
+          this.lastFinishedScanId = event.scanId;
+          this.applyFilters();
+        },
+        error: () => undefined,
+      });
   }
 
   applyFilters(): void {
