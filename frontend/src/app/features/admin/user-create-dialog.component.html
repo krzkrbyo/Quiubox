@@ -8,39 +8,57 @@
   </div>
 
   <form [formGroup]="form" (ngSubmit)="submit()" class="qb-dialog-form">
-    <mat-form-field appearance="outline">
-      <mat-label>Usuario</mat-label>
-      <input matInput formControlName="username" autocomplete="off" />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Nombres</mat-label>
-      <input matInput formControlName="nombres" autocomplete="off" />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Apellidos</mat-label>
-      <input matInput formControlName="apellidos" autocomplete="off" />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Correo</mat-label>
-      <input matInput type="email" formControlName="email" />
-    </mat-form-field>
+    <label class="qb-native-field">
+      <span>Usuario</span>
+      <input formControlName="username" autocomplete="off" placeholder="usuario" />
+      @if (form.controls.username.touched && form.controls.username.invalid) {
+        <small>Usuario requerido.</small>
+      }
+    </label>
+    <label class="qb-native-field">
+      <span>Nombres</span>
+      <input formControlName="nombres" autocomplete="off" placeholder="Nombres" />
+      @if (form.controls.nombres.touched && form.controls.nombres.invalid) {
+        <small>Nombres requeridos.</small>
+      }
+    </label>
+    <label class="qb-native-field">
+      <span>Apellidos</span>
+      <input formControlName="apellidos" autocomplete="off" placeholder="Apellidos" />
+      @if (form.controls.apellidos.touched && form.controls.apellidos.invalid) {
+        <small>Apellidos requeridos.</small>
+      }
+    </label>
+    <label class="qb-native-field">
+      <span>Correo</span>
+      <input type="email" formControlName="email" placeholder="usuario@quiubox.local" />
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+        <small>Correo inválido.</small>
+      }
+    </label>
     @if (isCreateMode()) {
-      <mat-form-field appearance="outline">
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" formControlName="password" autocomplete="new-password" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Confirmar contraseña</mat-label>
-        <input matInput type="password" formControlName="confirmPassword" autocomplete="new-password" />
-      </mat-form-field>
+      <label class="qb-native-field">
+        <span>Contraseña</span>
+        <input type="password" formControlName="password" autocomplete="new-password" placeholder="••••••••" />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <small>Mínimo 4 caracteres.</small>
+        }
+      </label>
+      <label class="qb-native-field">
+        <span>Confirmar contraseña</span>
+        <input type="password" formControlName="confirmPassword" autocomplete="new-password" placeholder="••••••••" />
+        @if (form.controls.confirmPassword.touched && form.controls.confirmPassword.invalid) {
+          <small>Confirma la contraseña.</small>
+        }
+      </label>
     }
-    <mat-form-field appearance="outline" class="qb-role-field">
-      <mat-label>Rol</mat-label>
-      <mat-select formControlName="role">
-        <mat-option value="user">Usuario</mat-option>
-        <mat-option value="admin">Administrador</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <label class="qb-native-field qb-role-field">
+      <span>Rol</span>
+      <select formControlName="role">
+        <option value="user">Usuario</option>
+        <option value="admin">Administrador</option>
+      </select>
+    </label>
 
     @if (errorMessage) {
       <p class="qb-error qb-form-message">{{ errorMessage }}</p>

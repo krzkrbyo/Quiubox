@@ -5,14 +5,14 @@
         <h1>Quiubox</h1>
       </div>
       <form [formGroup]="form" (ngSubmit)="submit()" class="qb-login-form">
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>Usuario</mat-label>
-          <input matInput formControlName="username" autocomplete="username" />
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>Contraseña</mat-label>
-          <input matInput type="password" formControlName="password" autocomplete="current-password" />
-        </mat-form-field>
+        <label class="qb-login-field">
+          <span>Usuario</span>
+          <input formControlName="username" autocomplete="username" placeholder="admin" />
+        </label>
+        <label class="qb-login-field">
+          <span>Contraseña</span>
+          <input type="password" formControlName="password" autocomplete="current-password" placeholder="••••••••" />
+        </label>
         @if (errorMessage) {
           <p class="qb-error">{{ errorMessage }}</p>
         }

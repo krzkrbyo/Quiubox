@@ -11,8 +11,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         return throwError(() => err);
       }
       const msg =
-        typeof err.error === 'object' && err.error && 'message' in err.error
-          ? String((err.error as { message?: string }).message)
+        typeof err.error === 'object' && err.error && 'error' in err.error
+          ? String((err.error as { error?: string }).error)
+          : typeof err.error === 'object' && err.error && 'message' in err.error
+            ? String((err.error as { message?: string }).message)
           : typeof err.error === 'string'
             ? err.error
             : err.statusText || 'Error en la solicitud';

@@ -40,7 +40,7 @@
 .qb-dialog-form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.65rem;
+  gap: 0.85rem;
 }
 
 .qb-role-field,
@@ -49,11 +49,66 @@
   grid-column: 1 / -1;
 }
 
+.qb-native-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.qb-native-field span {
+  color: var(--qb-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.qb-native-field input,
+.qb-native-field select {
+  width: 100%;
+  height: 2.85rem;
+  border: 1px solid rgba(148, 255, 214, 0.14);
+  border-radius: 8px;
+  background: rgba(7, 13, 18, 0.78);
+  color: var(--qb-text);
+  font: inherit;
+  outline: none;
+  padding: 0 0.85rem;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.qb-native-field select {
+  cursor: pointer;
+}
+
+.qb-native-field input::placeholder {
+  color: rgba(148, 163, 184, 0.58);
+}
+
+.qb-native-field input:focus,
+.qb-native-field select:focus {
+  border-color: rgba(124, 255, 200, 0.72);
+  background: rgba(8, 18, 23, 0.95);
+  box-shadow: 0 0 0 3px rgba(124, 255, 200, 0.12);
+}
+
+.qb-native-field input:disabled,
+.qb-native-field select:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.qb-native-field small {
+  color: var(--qb-danger);
+  font-size: 0.74rem;
+  line-height: 1.1;
+}
+
 .qb-dialog-actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
-  padding-top: 0.5rem;
+  padding-top: 0.65rem;
 }
 
 .qb-form-message {

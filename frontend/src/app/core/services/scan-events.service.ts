@@ -1,5 +1,5 @@
 import { Injectable, NgZone, inject } from '@angular/core';
-import { Observable, share } from 'rxjs';
+import { Observable, Subject, merge, share } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import type { Scan } from '../models/domain.models';
 
@@ -13,9 +13,18 @@ export interface ScanFinishedEvent {
   scan: Scan;
 }
 
+export interface ScanStartedEvent {
+  type: 'scan.started';
+  scanId: string;
+  scan: Scan;
+}
+
+export type ScanEvent = ScanFinishedEvent | ScanStartedEvent;
+
 @Injectable({ providedIn: 'root' })
 export class ScanEventsService {
   private readonly zone = inject(NgZone);
+  private readonly localEvents$ = new Subject<ScanEvent>();
   private readonly events$ = new Observable<ScanFinishedEvent>((subscriber) => {
     if (environment.useMock) {
       subscriber.complete();
@@ -42,8 +51,20 @@ export class ScanEventsService {
     return () => socket.close();
   }).pipe(share());
 
+  events(): Observable<ScanEvent> {
+    return merge(this.localEvents$, this.events$);
+  }
+
   scanFinished(): Observable<ScanFinishedEvent> {
     return this.events$;
+  }
+
+  notifyScanStarted(scan: Scan): void {
+    this.localEvents$.next({
+      type: 'scan.started',
+      scanId: scan.id,
+      scan,
+    });
   }
 
   private wsUrl(): string {

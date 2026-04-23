@@ -11,12 +11,14 @@ import type {
 } from '../models/domain.models';
 import { MockRepositoryService } from '../mock/mock-repository.service';
 import { NotificationService } from './notification.service';
+import { ScanEventsService } from './scan-events.service';
 
 @Injectable({ providedIn: 'root' })
 export class ScansApiService {
   private readonly http = inject(HttpClient);
   private readonly mockRepo = inject(MockRepositoryService);
   private readonly notifications = inject(NotificationService);
+  private readonly scanEvents = inject(ScanEventsService);
 
   listScans(): Observable<Scan[]> {
     if (environment.useMock) {
@@ -53,7 +55,17 @@ export class ScansApiService {
       this.simulateScan(scan.id, req.scanType);
       return of({ ...scan }).pipe(delay(200));
     }
-    return this.http.post<Scan>(`${environment.apiUrl}/scans`, req);
+    return new Observable<Scan>((subscriber) => {
+      const sub = this.http.post<Scan>(`${environment.apiUrl}/scans`, req).subscribe({
+        next: (scan) => {
+          this.scanEvents.notifyScanStarted(scan);
+          subscriber.next(scan);
+        },
+        error: (error) => subscriber.error(error),
+        complete: () => subscriber.complete(),
+      });
+      return () => sub.unsubscribe();
+    });
   }
 
   listSchedules(): Observable<ScanSchedule[]> {

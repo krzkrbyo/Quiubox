@@ -3,9 +3,6 @@ import { Component, Inject, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import type { Role, User } from '../../core/models/domain.models';
 import { UsersApiService } from '../../core/services/users-api.service';
 
@@ -21,9 +18,6 @@ export interface UserDialogData {
     CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
     MatButtonModule,
   ],
   templateUrl: './user-create-dialog.component.html',
@@ -151,7 +145,14 @@ export class UserCreateDialogComponent {
     }
 
     const raw = this.form.getRawValue();
-    this.usersApi.createUser({ ...raw, password: raw.password }).subscribe({
+    this.usersApi.createUser({
+      username: raw.username.trim(),
+      nombres: raw.nombres.trim(),
+      apellidos: raw.apellidos.trim(),
+      email: raw.email.trim(),
+      password: raw.password,
+      role: raw.role,
+    }).subscribe({
       next: (user) => {
         this.loading = false;
         this.dialogRef.close(user);

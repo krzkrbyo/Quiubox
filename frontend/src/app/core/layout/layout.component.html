@@ -1,22 +1,18 @@
 <mat-sidenav-container class="qb-shell relative overflow-hidden">
   <mat-sidenav
     class="qb-sidebar"
+    [class.qb-sidebar-collapsed]="!isMobile() && !menuOpen()"
     [mode]="isMobile() ? 'over' : 'side'"
-    [opened]="menuOpen()"
+    [opened]="isMobile() ? menuOpen() : true"
     [fixedInViewport]="isMobile()"
-    (openedChange)="menuOpen.set($event)"
+    (openedChange)="onSidenavOpenedChange($event)"
   >
     <aside class="qb-sidebar-content" aria-label="Menú principal">
       <div class="qb-sidebar-header">
-        <div class="qb-brand-block">
-          <span class="qb-brand-mark">Q</span>
-          <span class="qb-brand-copy">
-            <span class="qb-brand">Quiubox</span>
-            <span class="qb-brand-subtitle">Security panel</span>
-          </span>
-        </div>
-        <button mat-icon-button type="button" class="qb-close-menu" (click)="toggleMenu()" aria-label="Ocultar sidebar">
-          <mat-icon>{{ isMobile() ? 'close' : 'keyboard_double_arrow_left' }}</mat-icon>
+        <span class="qb-brand qb-brand-full">Quiubox</span>
+        <span class="qb-brand qb-brand-short">Q</span>
+        <button type="button" class="qb-menu-toggle" (click)="toggleMenu()" aria-label="Alternar sidebar">
+          <mat-icon>menu</mat-icon>
         </button>
       </div>
 
@@ -42,7 +38,7 @@
           <span class="qb-user-avatar">{{ auth.user()?.username?.charAt(0)?.toUpperCase() }}</span>
           <span class="qb-user-name">{{ auth.user()?.username }}</span>
         </div>
-        <button type="button" class="qb-logout" (click)="logout()">
+        <button type="button" class="qb-logout" (click)="logout()" aria-label="Cerrar sesión">
           <mat-icon>logout</mat-icon>
           <span>Cerrar sesión</span>
         </button>
@@ -51,19 +47,26 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="qb-content">
-    @if (!isMobile() && !menuOpen()) {
-      <button mat-button type="button" class="qb-desktop-toggle shadow-2xl" (click)="toggleMenu()" aria-label="Mostrar sidebar">
-        <mat-icon>keyboard_double_arrow_right</mat-icon>
-        <span>Menú</span>
-      </button>
-    }
-
-    <header class="qb-mobile-bar">
-      <button mat-icon-button type="button" (click)="toggleMenu()" aria-label="Abrir menú">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span class="qb-brand">Quiubox</span>
+    <header class="qb-topbar" [class.qb-topbar-mobile]="isMobile()">
+      <div class="qb-topbar-left">
+        @if (isMobile()) {
+          <button mat-icon-button type="button" (click)="toggleMenu()" aria-label="Abrir menú">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span class="qb-brand">Quiubox</span>
+        }
+      </div>
     </header>
+
+    @if (activeScans().length > 0) {
+      <div class="qb-status-bar">
+        <mat-spinner diameter="18" />
+        <span>
+          {{ activeScans().length === 1 ? '1 escaneo en ejecución' : activeScans().length + ' escaneos en ejecución' }}
+        </span>
+        <a routerLink="/scans">Ver actividad</a>
+      </div>
+    }
 
     <main class="qb-main">
       <router-outlet />
