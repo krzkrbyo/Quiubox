@@ -1,8 +1,22 @@
 import type { Scan, ScanSchedule, User, Vulnerability } from '../models/domain.models';
 
 export const MOCK_USERS: User[] = [
-  { id: '1', username: 'admin', email: 'admin@quiubox.local', role: 'admin' },
-  { id: '2', username: 'usuario', email: 'usuario@quiubox.local', role: 'user' },
+  {
+    id: '1',
+    username: 'admin',
+    nombres: 'Administrador',
+    apellidos: 'Quiubox',
+    email: 'admin@quiubox.local',
+    role: 'admin',
+  },
+  {
+    id: '2',
+    username: 'usuario',
+    nombres: 'Usuario',
+    apellidos: 'Prueba',
+    email: 'usuario@quiubox.local',
+    role: 'user',
+  },
 ];
 
 const now = new Date();

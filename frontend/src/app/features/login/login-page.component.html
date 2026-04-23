@@ -1,11 +1,25 @@
 <div class="qb-login">
+  <section class="qb-login-hero">
+    <div class="qb-hero-mark"></div>
+    <p class="qb-panel-title">QuiuboxDB</p>
+    <h1>Control de vulnerabilidades con una interfaz clara y directa.</h1>
+    <p class="qb-login-copy">
+      Accede al panel para administrar usuarios, lanzar escaneos y revisar hallazgos desde un flujo simple.
+    </p>
+    <div class="qb-badges">
+      <span class="qb-chip">Go backend</span>
+      <span class="qb-chip">Angular frontend</span>
+      <span class="qb-chip">PostgreSQL</span>
+    </div>
+  </section>
+
   <mat-card class="qb-card qb-login-card">
-    <mat-card-header>
-      <mat-card-title>Quiubox</mat-card-title>
-      <mat-card-subtitle>Gestión de vulnerabilidades</mat-card-subtitle>
-    </mat-card-header>
     <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="qb-login-header">
+        <span class="qb-login-kicker">Acceso</span>
+        <h2>Iniciar sesión</h2>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="submit()" class="qb-login-form">
         <mat-form-field appearance="outline" class="full">
           <mat-label>Usuario</mat-label>
           <input matInput formControlName="username" autocomplete="username" />
@@ -17,7 +31,7 @@
         @if (errorMessage) {
           <p class="qb-error">{{ errorMessage }}</p>
         }
-        <p class="qb-hint">Mock: admin / admin123 · usuario / usuario123</p>
+        <p class="qb-hint">Prueba: admin / admin123</p>
         <button mat-flat-button color="primary" type="submit" [disabled]="loading">
           {{ loading ? 'Entrando…' : 'Entrar' }}
         </button>

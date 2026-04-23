@@ -2,37 +2,28 @@
   <h1 class="qb-panel-title">Gestión de usuarios</h1>
 
   <mat-card class="qb-card qb-mb">
-    <h2 class="qb-h2">Nuevo usuario</h2>
-    <form [formGroup]="createForm" (ngSubmit)="create()" class="qb-form">
-      <mat-form-field appearance="outline">
-        <mat-label>Usuario</mat-label>
-        <input matInput formControlName="username" autocomplete="off" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Correo</mat-label>
-        <input matInput type="email" formControlName="email" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" formControlName="password" autocomplete="new-password" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Rol</mat-label>
-        <mat-select formControlName="role">
-          <mat-option value="user">Usuario</mat-option>
-          <mat-option value="admin">Administrador</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-flat-button color="primary" type="submit">Crear</button>
-    </form>
+    <div class="qb-headline-row">
+      <div>
+        <h2 class="qb-h2">Usuarios</h2>
+        <p class="qb-soft">Crea, edita y elimina usuarios desde un panel limpio y rápido.</p>
+      </div>
+      <button mat-flat-button color="primary" type="button" (click)="openCreateDialog()">Nuevo usuario</button>
+    </div>
   </mat-card>
 
   <mat-card class="qb-card">
-    <h2 class="qb-h2">Usuarios</h2>
     <table mat-table [dataSource]="users" class="qb-table mat-elevation-z0">
       <ng-container matColumnDef="username">
         <th mat-header-cell *matHeaderCellDef>Usuario</th>
         <td mat-cell *matCellDef="let row">{{ row.username }}</td>
+      </ng-container>
+      <ng-container matColumnDef="nombres">
+        <th mat-header-cell *matHeaderCellDef>Nombres</th>
+        <td mat-cell *matCellDef="let row">{{ row.nombres }}</td>
+      </ng-container>
+      <ng-container matColumnDef="apellidos">
+        <th mat-header-cell *matHeaderCellDef>Apellidos</th>
+        <td mat-cell *matCellDef="let row">{{ row.apellidos }}</td>
       </ng-container>
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef>Correo</th>
@@ -52,6 +43,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
+          <button mat-button type="button" (click)="startEdit(row)">Editar</button>
           <button mat-button type="button" (click)="saveRole(row)">Guardar rol</button>
           <button mat-button type="button" color="warn" (click)="remove(row)">Eliminar</button>
         </td>
@@ -59,5 +51,34 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+  </mat-card>
+
+  <mat-card class="qb-card qb-mb" *ngIf="editingUserId">
+    <h2 class="qb-h2">Editar usuario</h2>
+    <form (ngSubmit)="updateSelectedUser()" class="qb-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombres</mat-label>
+        <input matInput [(ngModel)]="editForm.nombres" name="edit_nombres" autocomplete="off" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Apellidos</mat-label>
+        <input matInput [(ngModel)]="editForm.apellidos" name="edit_apellidos" autocomplete="off" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input matInput type="email" [(ngModel)]="editForm.email" name="edit_email" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Rol</mat-label>
+        <mat-select [(ngModel)]="editForm.role" name="edit_role">
+          <mat-option value="user">Usuario</mat-option>
+          <mat-option value="admin">Administrador</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="qb-actions-inline">
+        <button mat-flat-button color="primary" type="submit">Guardar cambios</button>
+        <button mat-button type="button" (click)="cancelEdit()">Cancelar</button>
+      </div>
+    </form>
   </mat-card>
 </div>

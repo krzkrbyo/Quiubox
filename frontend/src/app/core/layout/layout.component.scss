@@ -1,13 +1,22 @@
+:host {
+  display: block;
+  min-height: 100%;
+}
+
 .qb-toolbar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
   border-bottom: 1px solid var(--qb-border);
+  background: rgba(7, 17, 13, 0.72) !important;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
 }
 
 .qb-brand {
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .qb-spacer {
@@ -18,12 +27,25 @@
   margin-right: 0.5rem;
   font-size: 0.85rem;
   color: var(--qb-muted);
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--qb-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .qb-main {
   min-height: calc(100vh - 64px);
+  padding-bottom: 2rem;
 }
 
 a.active {
   color: var(--qb-accent) !important;
+}
+
+.qb-toolbar a.mat-mdc-button {
+  border-radius: 999px;
+}
+
+.qb-toolbar a.mat-mdc-button.active {
+  background: rgba(124, 255, 200, 0.1);
 }

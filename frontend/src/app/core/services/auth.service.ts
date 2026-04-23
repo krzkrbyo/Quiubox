@@ -45,9 +45,23 @@ export class AuthService {
     const p = password;
     let user: User | null = null;
     if (u === 'admin' && p === 'admin123') {
-      user = { id: '1', username: 'admin', email: 'admin@quiubox.local', role: 'admin' };
+      user = {
+        id: '1',
+        username: 'admin',
+        nombres: 'Administrador',
+        apellidos: 'Quiubox',
+        email: 'admin@quiubox.local',
+        role: 'admin',
+      };
     } else if (u === 'usuario' && p === 'usuario123') {
-      user = { id: '2', username: 'usuario', email: 'usuario@quiubox.local', role: 'user' };
+      user = {
+        id: '2',
+        username: 'usuario',
+        nombres: 'Usuario',
+        apellidos: 'Prueba',
+        email: 'usuario@quiubox.local',
+        role: 'user',
+      };
     }
     if (!user) {
       return throwError(() => new Error('Credenciales inválidas'));

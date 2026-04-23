@@ -8,12 +8,16 @@ import { MockRepositoryService } from '../mock/mock-repository.service';
 
 export interface CreateUserRequest {
   username: string;
+  nombres: string;
+  apellidos: string;
   email: string;
   password: string;
   role: Role;
 }
 
 export interface UpdateUserRequest {
+  nombres?: string;
+  apellidos?: string;
   email: string;
   role: Role;
 }
@@ -35,6 +39,8 @@ export class UsersApiService {
       const user: User = {
         id: this.mockRepo.nextId('user'),
         username: req.username.trim(),
+        nombres: req.nombres.trim(),
+        apellidos: req.apellidos.trim(),
         email: req.email.trim(),
         role: req.role,
       };
@@ -50,6 +56,8 @@ export class UsersApiService {
       if (!u) {
         return throwError(() => new Error('Usuario no encontrado'));
       }
+      u.nombres = req.nombres?.trim() ?? u.nombres;
+      u.apellidos = req.apellidos?.trim() ?? u.apellidos;
       u.email = req.email.trim();
       u.role = req.role;
       return of({ ...u }).pipe(delay(120));
